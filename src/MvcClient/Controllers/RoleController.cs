@@ -5,23 +5,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApi.Controllers
+namespace MvcClient.Controllers
 {
-    [Route("identity")]
-    [Authorize]
-    public class IdentityController : ControllerBase
+    public class RoleController : Controller
     {
-        [HttpGet]
-        public IActionResult Get()
+        public IActionResult Index()
         {
-            return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
+            return View();
         }
 
-        [HttpPost]
         [Authorize(Roles = "BobRole")]
-        public IActionResult Post()
+        public IActionResult BobRole()
         {
             return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
+            return View();
+        }
+
+        [Authorize(Roles = "AliceRole")]
+        public IActionResult AliceRole()
+        {
+            return View();
         }
     }
 }

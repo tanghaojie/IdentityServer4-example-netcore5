@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
+using IdentityModel;
 
 namespace MvcClient
 {
@@ -52,6 +53,7 @@ namespace MvcClient
                 options.Scope.Add(OpenIdConnectScope.OpenIdProfile);
                 options.Scope.Add(OpenIdConnectScope.Email);
                 options.Scope.Add(OpenIdConnectScope.OfflineAccess);
+                options.Scope.Add("identity_role");
                 options.Scope.Add("api1");
                 options.Scope.Add("api2");
                 //options.Scope.Add("jt_resource_name");
@@ -63,6 +65,12 @@ namespace MvcClient
                 options.ClaimActions.Add(new MapAllClaimsAction());
 
                 options.GetClaimsFromUserInfoEndpoint = true;
+
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    NameClaimType = JwtClaimTypes.Name,
+                    RoleClaimType = JwtClaimTypes.Role,
+                };
             });
         }
 

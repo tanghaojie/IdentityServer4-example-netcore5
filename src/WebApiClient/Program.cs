@@ -25,7 +25,7 @@ namespace WebApiClient
                 Address = disco.TokenEndpoint,
                 ClientId = "WebApiClient",
                 ClientSecret = "WebApiClient",
-                Scope = "api1"
+                Scope = "api_role"
             });
 
             if (tokenResponse.IsError)

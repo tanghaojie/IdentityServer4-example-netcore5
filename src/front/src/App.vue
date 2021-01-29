@@ -2,7 +2,7 @@
   <div id="app">
     <a
       href="
-      https://localhost:5001/connect/authorize?response_type=token&client_id=Front&redirect_uri=http://localhost:8082&scope=api2
+      https://localhost:5001/connect/authorize?response_type=token&client_id=Front&redirect_uri=http://localhost:8082&scope=api_role
       "
       >Login</a
     >
@@ -14,6 +14,10 @@
       <div v-for="(item, index) in data" :key="index">
         {{ item.type }} ---- {{ item.value }}
       </div>
+    </div>
+
+    <div v-show="token" @click="callBobRoleApi" style="margin-top: 50px">
+      Call Bob Role Web Api
     </div>
   </div>
 </template>
@@ -36,6 +40,19 @@ export default {
         .then(res => {
           self.data = res.data
         })
+    },
+    callBobRoleApi() {
+      axios
+        .post('https://localhost:6001/identity', null, {
+          headers: {
+            Authorization: 'Bearer ' + this.token,
+            'Access-Control-Allow-Origin': '*'
+          }
+        })
+        .then(res => {
+          console.log(res)
+          alert('success')
+        })
     }
   },
   data() {
@@ -45,11 +62,13 @@ export default {
     }
   },
   mounted() {
-    const argString = window.location.hash
-    const token = argString
-      .replace('#access_token=', '')
-      .replace('&token_type=Bearer&expires_in=3600&scope=api2', '')
-    this.token = token
+    const argString = window.location.hash.replace('#', '')
+    const parts = argString.split('&')
+    parts.forEach(element => {
+      if (element.startsWith('access_token=')) {
+        this.token = element.replace('access_token=', '')
+      }
+    })
   }
 }
 </script>

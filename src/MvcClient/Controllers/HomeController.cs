@@ -25,8 +25,6 @@ namespace MvcClient.Controllers
 
         public IActionResult Index()
         {
-            var x = HttpContext;
-            var y = User.FindFirst(JwtClaimTypes.WebSite);
             return View();
         }
 

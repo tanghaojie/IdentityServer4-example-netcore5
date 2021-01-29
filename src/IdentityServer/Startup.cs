@@ -41,8 +41,8 @@ namespace IdentityServer
                 {
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
 
-                    options.ClientId = "1068124938619-03lsli7b1h0g1m6d2nq8f70db1oi21bf.apps.googleusercontent.com";
-                    options.ClientSecret = "SeUnx33ZREuGrtAQsiWkYniK";
+                    options.ClientId = "************";
+                    options.ClientSecret = "************";
                 });
 
             // not recommended for production - you need to store your key material somewhere secure
